@@ -1,0 +1,8 @@
+Lead ID,Name,Source,Status,Date,Assigned To
+1,Lead One,Facebook,Contacted,2024-09-20,John Doe
+2,Lead Two,Google,Contacted,2024-09-21,Alice Wonder
+3,Lead Three,Twitter,Qualified,2024-09-22,Jane Smith
+4,Lead Four,Website,Not Interested,2024-09-23,Bob Brown
+5,Lead Five,Offline,New,2024-09-24,John Doe
+6,Lead Six,Facebook,New,2024-09-24,John Doe
+7,Lead Seven,Facebook,New,2024-09-24,John Doe
