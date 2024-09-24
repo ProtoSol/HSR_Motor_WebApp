@@ -27,7 +27,7 @@ def load_leads():
 # Save lead data to CSV
 def save_leads(leads_df):
     leads_df.to_csv(LEADS_CSV, index=False)
-    st.session_state.leads_df = leads_df  # Update the session state
+    st.session_state.leads_df = leads_df
 
 # Initialize session state for user and leads
 if 'logged_in' not in st.session_state:
@@ -54,7 +54,6 @@ def lead_listing():
     st.title('Lead Listing')
     
     if check_permission('View Leads'):
-        # Display current leads
         st.subheader("Current Leads")
         st.dataframe(st.session_state.leads_df)
     else:
@@ -85,15 +84,12 @@ def lead_management():
                         'Assigned To': st.session_state.current_user['name']
                     }])
                     
-                    # Add the new lead to the DataFrame using concat
                     st.session_state.leads_df = pd.concat([st.session_state.leads_df, new_lead], ignore_index=True)
                     
-                    # Save the updated DataFrame to CSV
                     save_leads(st.session_state.leads_df)
                     
                     st.success(f'Lead "{lead_name}" added successfully!')
                     
-                    # Display confirmation of the new lead
                     st.subheader("New Lead Added")
                     st.dataframe(new_lead)
                 else:
@@ -140,7 +136,7 @@ def dashboard():
         contacted_leads = st.session_state.leads_df[st.session_state.leads_df['Status'] == 'Contacted']
         qualified_leads = st.session_state.leads_df[st.session_state.leads_df['Status'] == 'Qualified']
 
-        # Display lead counts in a box
+        # Display lead counts as Metric
         st.metric(label="New Leads:", value=len(new_leads))
         st.metric(label="Contacted Leads:", value=len(contacted_leads))
         st.metric(label="Qualified Leads:", value=len(qualified_leads))
@@ -155,12 +151,12 @@ def dashboard():
         ax.set_title('Number of Leads by Status')
         st.pyplot(fig)
 
-        # Lead Sources Pie Charts
+        # Lead Sources Pie Chart
         st.subheader('Lead Sources Distribution')
         source_counts = st.session_state.leads_df['Source'].value_counts()
         fig, ax = plt.subplots()
         ax.pie(source_counts, labels=source_counts.index, autopct='%1.1f%%', startangle=90, colors=sns.color_palette('pastel'))
-        ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        ax.axis('equal')
         st.pyplot(fig)
 
         st.subheader('Lead Data Overview')
@@ -172,11 +168,10 @@ def dashboard():
     
     
 
-# Main function for role-based navigation
+# Main function
 def main():
     st.sidebar.title(f"Welcome, {st.session_state.current_user['name']} ({st.session_state.current_user['role']})")
 
-    # Use radio buttons for navigation
     nav_options = ["Lead Listing", "Lead Management", "Lead Details", "Dashboard"]
     nav_selection = st.sidebar.radio("Navigation", nav_options)
 
@@ -191,7 +186,6 @@ def main():
     else:
         st.write("Welcome to the HSR Motors Lead Management System. Please select an option from the sidebar.")
 
-    # Always show some content, even if no specific section is selected
     if not st.session_state.get('content_displayed', False):
         st.write("Select an option from the sidebar to view content.")
 
